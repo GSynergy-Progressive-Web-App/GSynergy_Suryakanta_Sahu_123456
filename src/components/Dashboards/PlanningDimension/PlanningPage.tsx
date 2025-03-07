@@ -50,19 +50,19 @@ const PlanningPage: React.FC = () => {
     ];
 
     Object.entries(months).forEach(([month, weeks]) => {
-      const monthGroup: ColGroupDef<DataItem> = {
-        headerName: month,
-        children: weeks.flatMap((week) => [
+      const weekColumns = weeks.map((week) => ({
+        headerName: week, // Displays "Week01", "Week02", etc.
+        children: [
           {
             field: `${week}_salesUnits`,
-            headerName: 'Sales Units',
+            headerName: 'Units',
             editable: true,
             type: 'numericColumn',
             width: 120,
           },
           {
             field: `${week}_salesDollars`,
-            headerName: 'Sales Dollars',
+            headerName: 'Dollars',
             valueGetter: (params: ValueGetterParams<DataItem>) => {
               const salesUnits =
                 (params.data?.[`${week}_salesUnits`] as number) || 0;
@@ -109,9 +109,13 @@ const PlanningPage: React.FC = () => {
             },
             width: 100,
           },
-        ]),
-      };
-      columns.push(monthGroup);
+        ],
+      }));
+
+      columns.push({
+        headerName: month,
+        children: weekColumns,
+      });
     });
 
     return columns;
