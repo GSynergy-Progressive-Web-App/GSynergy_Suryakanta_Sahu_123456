@@ -18,19 +18,18 @@ interface DataItem {
   sku: string;
   price: number;
   cost: number;
-  [key: string]: string | number; // Allow dynamic week fields
+  [key: string]: string | number;
 }
 
 const PlanningPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const data = useSelector((state: RootState) => state.data.data);
 
-  // Handle cell value changes
   const onCellValueChanged = (params: CellValueChangedEvent<DataItem>) => {
     if (params.colDef.field?.includes('_salesUnits')) {
       dispatch(
         updateSalesUnits({
-          rowIndex: params.node?.rowIndex ?? 0, // Ensure rowIndex is a number
+          rowIndex: params.node?.rowIndex ?? 0,
           value: params.newValue as number,
           week: params.colDef.field.split('_')[0],
         })
@@ -38,7 +37,6 @@ const PlanningPage: React.FC = () => {
     }
   };
 
-  // Generate column definitions dynamically
   const generateColumns = (): (ColDef<DataItem> | ColGroupDef<DataItem>)[] => {
     const months: Record<string, string[]> = {
       January: ['Week01', 'Week02', 'Week03', 'Week04'],
@@ -65,7 +63,7 @@ const PlanningPage: React.FC = () => {
           {
             field: `${week}_salesDollars`,
             headerName: 'Sales Dollars',
-            valueGetter: (params: ValueGetterParams<DataItem>): string => {
+            valueGetter: (params: ValueGetterParams<DataItem>) => {
               const salesUnits =
                 (params.data?.[`${week}_salesUnits`] as number) || 0;
               const price = params.data?.price || 0;
@@ -76,7 +74,7 @@ const PlanningPage: React.FC = () => {
           {
             field: `${week}_gmDollars`,
             headerName: 'GM Dollars',
-            valueGetter: (params: ValueGetterParams<DataItem>): string => {
+            valueGetter: (params: ValueGetterParams<DataItem>) => {
               const salesUnits =
                 (params.data?.[`${week}_salesUnits`] as number) || 0;
               const price = params.data?.price || 0;
@@ -88,7 +86,7 @@ const PlanningPage: React.FC = () => {
           {
             field: `${week}_gmPercent`,
             headerName: 'GM %',
-            valueGetter: (params: ValueGetterParams<DataItem>): string => {
+            valueGetter: (params: ValueGetterParams<DataItem>) => {
               const salesUnits =
                 (params.data?.[`${week}_salesUnits`] as number) || 0;
               const price = params.data?.price || 0;
@@ -120,25 +118,12 @@ const PlanningPage: React.FC = () => {
   };
 
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{
-        height: 600,
-        width: '100%',
-        overflowX: 'auto',
-      }}
-    >
+    <div className="ag-theme-alpine" style={{ height: 600, width: '100%' }}>
       <AgGridReact
         rowData={data}
         columnDefs={generateColumns()}
         onCellValueChanged={onCellValueChanged}
-        defaultColDef={{
-          resizable: true,
-          minWidth: 100,
-          flex: 1,
-        }}
-        domLayout="autoHeight"
-        suppressHorizontalScroll={false}
+        defaultColDef={{ resizable: true, minWidth: 100, flex: 1 }}
       />
     </div>
   );

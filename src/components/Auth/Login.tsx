@@ -19,7 +19,7 @@ export default function SignIn() {
 
   const handleLogin = () => {
     // Manual authentication logic
-    if (email === 'demo@example.com' && password === 'password') {
+    if (email === 'surya@gmail.com' && password === 'Surya@123') {
       dispatch(login(email));
       navigate('/Dashboard');
     } else {
