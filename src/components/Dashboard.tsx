@@ -3,8 +3,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import Navigator from './CommonComponents/Navigator';
 import Header from './CommonComponents/Header';
 import ChartPage from './Dashboards/Chart/ChartPage';

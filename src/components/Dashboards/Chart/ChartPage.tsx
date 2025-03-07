@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  LineChart,
   Line,
   BarChart,
   Bar,
@@ -10,7 +9,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
