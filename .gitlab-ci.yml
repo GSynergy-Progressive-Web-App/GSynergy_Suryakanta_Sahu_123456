@@ -1,0 +1,30 @@
+image: node:14
+
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+
+test:
+  stage: test
+  script:
+    - npm test
+  artifacts:
+    reports:
+      junit: test-results.xml
+    paths:
+      - coverage/
